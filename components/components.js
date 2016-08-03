@@ -1,69 +1,70 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-let timer
+let timer;
+
 class Time extends Component {
   render() {
-    return <span>{ this.state.time }</span>
+    return <span>{ this.props.time }</span>;
   }
 }
 
 class Start extends Component {
-  render() {
-    return <button onClick={ this.clickHandler }>Start</button>
+  clickHandler() {
+    timer = setInterval(this.props.actions.start, 1000);
   }
 
-  clickHandler() {
-    while (!this.props.state.time) {
-      timer = setTimeout(this.props.start, 1000)
-    }
+  render() {
+    return <button onClick={this.clickHandler.bind(this)}>Start</button>;
   }
 }
 
 class Pause extends Component {
-  render() {
-    return <button onClick={ this.clickHandler }>Pause</button>
+  clickHandler() {
+    clearInterval(timer);
+    this.props.actions.pause();
   }
 
-  clickHandler() {
-    clearTimeout(timer)
-    this.props.actions.pause()
+  render() {
+    return <button onClick={this.clickHandler.bind(this)}>Pause</button>;
   }
 }
 
 class Increase extends Component {
-  render() {
-    return <button onClick={ this.clickHandler }>Increase</button>
+  clickHandler() {
+    this.props.actions.increase();
   }
 
-  clickHandler() {
-    this.props.actions.increase()
+  render() {
+    return <button onClick={this.clickHandler.bind(this)}>Increase</button>;
   }
 }
 
 class Decrease extends Component {
-  render() {
-    return <button onClick={ this.clickHandler }>Decrease</button>
+  clickHandler() {
+    this.props.actions.decrease();
   }
 
-  clickHandler() {
-    this.props.actions.decrease()
+  render() {
+    return <button onClick={this.clickHandler.bind(this)}>Decrease</button>;
   }
 }
 
 class Exit extends Component {
-  render() {
-    return <button onClick={ this.clickHandler }>Exit</button>
+  clickHandler() {
+    clearTimeout(timer);
+    this.props.actions.exit();
   }
 
-  clickHandler() {
-    clearTimeout(timer)
-    this.props.actions.exit()
+  render() {
+    return <button onClick={this.clickHandler.bind(this)}>Exit</button>;
   }
 }
 
-export default Time
-export default Start
-export default Pause
-export default Increase
-export default Decrease
-export default Exit
+export {
+  Time,
+  Start,
+  Pause,
+  Increase,
+  Decrease,
+  Exit,
+};
